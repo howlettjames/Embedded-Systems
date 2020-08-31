@@ -1,0 +1,12 @@
+/EmbeddedMicro/PULSO.X/build/
+/EmbeddedMicro/PULSO_CARD.X/build/
+/EmbeddedMicro/PULSO_CARD.X/dist/
+*.o
+*.out
+*.exe
+*.xlsx
+*.class
+*.zip
+*.gz
+*.jpg
+*.png

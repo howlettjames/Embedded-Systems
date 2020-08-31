@@ -1,0 +1,51 @@
+#!/bin/bash
+
+PATH_PID=/var/run/demonio.pid
+PID=$(cat $PATH_PID)
+
+function verifica()
+{
+	if [ -e $PATH_PID ] ; then
+		if [ -d /proc/$PID ] ; then
+			echo "Si existe el demonio"
+			return 0
+		else
+			echo "No existe demonio en ejecucion"
+		fi
+	else
+		echo "No existe $PATH_PID"
+	fi
+	return 1
+}
+
+case $1 in
+	start)
+		if verifica ; then
+			echo "Demonio $PID en ejecucion, no es necesario iniciarlo"
+		else
+			echo "Iniciando demonio"
+			/usr/local/bin/mi_demonio
+		fi
+	;;
+	stop)
+		if verifica ; then
+			echo "Deteniendo demonio"
+			kill -SIGTERM $PID
+		else
+			echo "El demonio no esta en ejecucion, no es necesario detenerlo"
+		fi
+	;;
+	status)
+		echo "Opcion status"
+		if verifica ; then
+			echo "Demonio $PID en ejecucion"
+		else
+			echo "Demonio sin ejecucion"
+		fi
+	;;
+	*)
+	echo "Sintaxis: $0 [start|stop|status]"
+	;;
+esac
+
+exit 0
